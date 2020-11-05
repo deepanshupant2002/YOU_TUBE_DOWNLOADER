@@ -6,19 +6,21 @@ from tkinter.messagebox import *
 from threading import *
 
 file_size = 0
-def progress(stream=None,chunk=None,file_handle=None,remaining=0):
+def progress(stream=None,chunk=None,remaining=None):
                     
-                    # GETS THE %AGE OF THE FILE THAT HAS BEEN DOWNLOADED
+                     # GETS THE %AGE OF THE FILE THAT HAS BEEN DOWNLOADED
 
     file_downloaded=(file_size-remaining)
-    per = (file_downloaded//file_size)*100
-    btm.config(text=f"{per}% downloaded")
+    # print(file_downloaded)
+    per = (file_downloaded/file_size)*100
+    # print(per)
+    btm.config(text=f"{per:0.00f}% downloaded")
 
 def startDownload():
     global file_size 
     try:
         url =urlField.get()
-        print(url)
+        # print(url)
                     #  CHANGING BUTTON TEXT
         btm.config(text="Please wait.......")
         btm.config(state=DISABLED)
@@ -33,15 +35,13 @@ def startDownload():
         ob= YouTube(url,on_progress_callback=progress)
 
 
-
-
-        # strms=ob.streams.all()          for checking all streams
+        # strms=ob.streams.all()           #for checking all streams
         # for i in strms:
-        #     print(i)
+            # print(i)
 
         strm=ob.streams.first()
         file_size=strm.filesize
-        print(file_size)
+        # print(file_size)
 
         # print(strm.filesize)          for determining video size
         # print(strm.title)             for determining  video title
